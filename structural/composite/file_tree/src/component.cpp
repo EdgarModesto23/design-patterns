@@ -5,24 +5,33 @@ using namespace sysfile;
 
 File::File() {
   this->size = 0;
-  this->content = "";
+  this->content = "Hola mundo";
 }
+
+Component::~Component() {}
 
 File::~File() {}
 
 int File::getSize() { return this->size; }
 
-std::string File::displayContent() { return this->displayContent(); }
+std::string File::displayContent() { return this->content; }
 
-std::string Directory::displayContent() {
-  return this->getChild()->displayContent();
-};
+Directory::Directory() {
+  this->size = 0;
+  this->content = "";
+}
+std::string Directory::displayContent() { return this->content; };
 
 Component *Directory::getParent() { return this->parent; }
 
 Component *Directory::getChild() { return this->child; }
 
-void Directory::add(Component *c) {
-  c->setParent(this);
-  this->child = c;
-}
+void Directory::setParent(Component *c) { this->parent = c; }
+
+int Directory::getSize() { return this->size; }
+
+void Directory::remove(Component *d) { this->child = nullptr; }
+
+Directory::~Directory() {}
+
+void Directory::add(File *f) { this->content = f->displayContent(); }

@@ -5,18 +5,28 @@
 
 namespace sysfile {
 
-class Component {
+class File {
 private:
-  Component *child;
-  Component *parent;
   std::string content;
   int size;
 
 public:
-  Component();
-  virtual ~Component();
+  File();
+  ~File();
+  std::string displayContent();
+  int getSize();
+};
+
+class Component {
+
+public:
+  Component *child;
+  Component *parent;
+  std::string content;
+  int size;
+  virtual ~Component() = 0;
   virtual std::string displayContent() = 0;
-  virtual void add(Component *c) = 0;
+  virtual void add(File *f) = 0;
   virtual void remove(Component *d) = 0;
   virtual int getSize() = 0;
   virtual Component *getParent() = 0;
@@ -24,30 +34,12 @@ public:
   virtual void setParent(Component *c) = 0;
 };
 
-class File : public Component {
-private:
-  std::string content;
-  int size;
-
-public:
-  File();
-  ~File() override;
-  std::string displayContent() override;
-  int getSize() override;
-};
-
 class Directory : public Component {
-private:
-  Component *child;
-  Component *parent;
-  std::string content;
-  int size;
-
 public:
   Directory();
   ~Directory() override;
   std::string displayContent() override;
-  void add(Component *c) override;
+  void add(File *f) override;
   void remove(Component *d) override;
   int getSize() override;
   Component *getParent() override;
